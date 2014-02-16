@@ -4,9 +4,9 @@ class Forum2Discourse::Models::Vanilla::Comment
   storage_names[:default] = "LUM_Comment"
 
   property :id,   Serial, field: 'CommentID'
-  property :created_at, DateTime, field: 'DateCreated'
+  property :created_at, DateTime, field: 'DateInserted'
   property :discussion_id, Integer, field: 'DiscussionID'
-  property :user_id, Integer, field: 'AuthUserID'
+  property :user_id, Integer, field: 'InsertUserID'
   property :body, Text, field: 'Body'
 
   belongs_to :discussion, 'Forum2Discourse::Models::Vanilla::Discussion'

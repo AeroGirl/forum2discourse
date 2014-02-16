@@ -6,11 +6,13 @@ class Forum2Discourse::Models::Vanilla::User
   property :id, Serial, field: "UserID"
   property :username, String, field: "Name"
   property :email,      String, field: "Email"
+  property :ip_address,      String, field: "LastIPAddress"
 
   def to_discourse
     Forum2Discourse::Models::Discourse::User.new(
       username: username,
-      email: email
+      email: email,
+      ip_address: ip_address,
     )
   end
 end

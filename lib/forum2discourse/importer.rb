@@ -47,6 +47,7 @@ class Forum2Discourse::Importer
     posts.each do |post|
       user = discourse_user(post.user)
       data = post.serialize.merge({topic_id: discourse_topic.id})
+      data[:skip_validations] = true
       PostCreator.new(discourse_user(post.user), data).create
     end
     log "  Imported #{posts.size} posts"

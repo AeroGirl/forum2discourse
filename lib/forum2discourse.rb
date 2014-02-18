@@ -8,3 +8,5 @@ require 'forum2discourse/exporter'
 require 'forum2discourse/exporters/punbb'
 require 'forum2discourse/exporters/vanilla'
 require 'forum2discourse/models/discourse'
+
+DataMapper.finalize

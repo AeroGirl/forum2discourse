@@ -28,7 +28,7 @@ class Forum2Discourse::Importer
     log "Importing '#{topic.title}'"
     user = discourse_user(topic.posts.first.user)
     guardian = Guardian.new(user)
-    find_or_create_category(user, topic.category)
+    #find_or_create_category(user, topic.category)
     discourse_topic = TopicCreator.new(user, guardian, topic.serialize).create
     import_topic_posts(discourse_topic, topic.posts)
   rescue

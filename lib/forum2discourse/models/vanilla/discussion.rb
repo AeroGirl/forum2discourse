@@ -26,6 +26,7 @@ class Forum2Discourse::Models::Vanilla::Discussion
     posts.unshift(topic_comment.to_discourse)
 
     Forum2Discourse::Models::Discourse::Topic.new({
+      id: id,
       title: subject,
       created_at: created_at,
       category: category.name,

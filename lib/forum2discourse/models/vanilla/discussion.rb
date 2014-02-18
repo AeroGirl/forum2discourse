@@ -17,6 +17,7 @@ class Forum2Discourse::Models::Vanilla::Discussion
     return nil if category.nil?
 
     topic_comment = Forum2Discourse::Models::Vanilla::Comment.new(
+      id: 0,
       created_at: created_at,
       discussion_id: id,
       user_id: user_id,

@@ -1,7 +1,7 @@
 class Forum2Discourse::Models::Vanilla::Comment
   include DataMapper::Resource
 
-  storage_names[:default] = "LUM_Comment"
+  storage_names[:default] = "GDN_Comment"
 
   property :id,   Serial, field: 'CommentID'
   property :created_at, DateTime, field: 'DateInserted'

@@ -1,7 +1,7 @@
 class Forum2Discourse::Models::Vanilla::User
   include DataMapper::Resource
 
-  storage_names[:default] = "LUM_User"
+  storage_names[:default] = "GDN_User"
 
   property :id, Serial, field: "UserID"
   property :username, String, field: "Name"

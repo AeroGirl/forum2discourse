@@ -22,13 +22,14 @@ class Forum2Discourse::Models::Vanilla::Discussion
       user_id: user_id,
       body: body)
 
-    all_comments = comments.unshift(topic_comment)
+    posts = comments.map(&:to_discourse)
+    posts.unshift(topic_comment.to_discourse)
 
     Forum2Discourse::Models::Discourse::Topic.new({
       title: subject,
       created_at: created_at,
       category: category.name,
-      posts: all_comments.map(&:to_discourse)
+      posts: posts
     })
   end
 end

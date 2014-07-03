@@ -1,7 +1,7 @@
 class Forum2Discourse::Models::Vanilla::Discussion
   include DataMapper::Resource
 
-  storage_names[:default] = 'LUM_Discussion'
+  storage_names[:default] = 'GDN_Discussion'
 
   property :id,           Serial, field: 'DiscussionID'
   property :created_at,   DateTime, field: 'DateInserted'

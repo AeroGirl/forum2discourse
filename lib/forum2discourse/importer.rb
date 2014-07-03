@@ -39,7 +39,8 @@ class Forum2Discourse::Importer
 
   def find_or_create_category(user, category)
     unless @categories.include? category
-      @categories << Category.create_with(user: user).find_or_create_by_name(category)
+      x = Category.create_with(user: user)
+      @categories << x.find_by_name(category) || x.create(:name => category)
     end
   end
 
@@ -62,12 +63,14 @@ class Forum2Discourse::Importer
   end
 
   def discourse_user(user)
-    u = User.create_with(user.serialize).find_or_create_by_username(user.serialize[:username])
+    x = User.create_with(user.serialize);
+    u = x.find_by_username(user.serialize[:username]) || x.create(:username => user.serialize[:username])
     if u.persisted?
       u
     else
       anon = Forum2Discourse::Models::Discourse::User.anonymous.serialize
-      User.create_with(anon).find_or_create_by_username(anon[:username])
+      x = User.create_with(anon)
+      x.find_by_username(anon[:username]) || x.create(:username => anon[:username])
     end
   end
 

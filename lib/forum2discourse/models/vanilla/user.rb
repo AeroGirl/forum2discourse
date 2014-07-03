@@ -13,6 +13,7 @@ class Forum2Discourse::Models::Vanilla::User
       username: username,
       email: email,
       ip_address: ip_address,
+      id: id
     )
   end
 end

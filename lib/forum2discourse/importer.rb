@@ -8,6 +8,9 @@ class Forum2Discourse::Importer
   def initialize(topics)
     @topics = topics
     @categories = []
+
+    File.open('topics_map.csv', 'w') {|f| f.write("old_id,new_id\n") }
+    File.open('users_map.csv', 'w') {|f| f.write("old_id,new_id\n") }
   end
 
   # XXX consider reimplementing this as a Logger
@@ -30,6 +33,7 @@ class Forum2Discourse::Importer
     guardian = Guardian.new(user)
     #find_or_create_category(user, topic.category)
     discourse_topic = TopicCreator.new(user, guardian, topic.serialize).create
+    File.open('topics_map.csv', 'a') {|f| f.write("#{topic.id},#{discourse_topic.id}\n") }
     import_topic_posts(discourse_topic, topic.posts)
   rescue
     puts "FAILED TO IMPORT TOPIC #{topic.title}"
@@ -65,7 +69,9 @@ class Forum2Discourse::Importer
   def discourse_user(user)
     x = User.create_with(user.serialize);
     u = x.find_by_username(user.serialize[:username]) || x.create(:username => user.serialize[:username])
+
     if u.persisted?
+      File.open('users_map.csv', 'a') {|f| f.write("#{user.serialize[:id]},#{u.id}\n") }
       u
     else
       anon = Forum2Discourse::Models::Discourse::User.anonymous.serialize

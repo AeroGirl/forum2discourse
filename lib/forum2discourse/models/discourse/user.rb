@@ -3,7 +3,7 @@ class Forum2Discourse::Models::Discourse::User < Forum2Discourse::Models::Discou
   def self.anonymous
     @anonymous ||= new(username: 'Anonymous', email: 'anonymous@example.com', name: 'Anonymous User')
   end
-  attr_accessor :username, :email, :name, :ip_address
+  attr_accessor :username, :email, :name, :ip_address, :id
 
   def valid?
     !username.nil? &&

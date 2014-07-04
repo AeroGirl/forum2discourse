@@ -19,7 +19,8 @@ class Forum2Discourse::Models::Vanilla::Comment
       category: discussion.category.name,
       user: duser,
       raw: body,
-      created_at: created_at
+      created_at: created_at,
+      id: id
     )
   end
 end

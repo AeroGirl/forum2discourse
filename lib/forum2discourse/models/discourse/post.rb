@@ -1,6 +1,6 @@
 class Forum2Discourse::Models::Discourse::Post < Forum2Discourse::Models::Discourse::Base
   # Standard attrs
-  attr_accessor :title, :category, :topic_id, :raw, :created_at
+  attr_accessor :title, :category, :topic_id, :raw, :created_at, :id
   # Relationships
   attr_accessor :user
   # Weird attrs

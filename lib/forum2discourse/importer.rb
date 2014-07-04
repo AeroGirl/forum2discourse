@@ -11,6 +11,7 @@ class Forum2Discourse::Importer
 
     File.open('topics_map.csv', 'w') {|f| f.write("old_id,new_id\n") }
     File.open('users_map.csv', 'w') {|f| f.write("old_id,new_id\n") }
+    File.open('posts_map.csv', 'w') {|f| f.write("old_id,new_id\n") }
   end
 
   # XXX consider reimplementing this as a Logger
@@ -34,7 +35,7 @@ class Forum2Discourse::Importer
     #find_or_create_category(user, topic.category)
     discourse_topic = TopicCreator.new(user, guardian, topic.serialize).create
     File.open('topics_map.csv', 'a') {|f| f.write("#{topic.id},#{discourse_topic.id}\n") }
-    import_topic_posts(discourse_topic, topic.posts)
+    import_topic_posts(discourse_topic, topic.posts, topic.id)
   rescue
     puts "FAILED TO IMPORT TOPIC #{topic.title}"
     puts "Error: #{$!.message}"
@@ -48,12 +49,14 @@ class Forum2Discourse::Importer
     end
   end
 
-  def import_topic_posts(discourse_topic, posts)
+  def import_topic_posts(discourse_topic, posts, old_topic_id)
     posts.each do |post|
       user = discourse_user(post.user)
       data = post.serialize.merge({topic_id: discourse_topic.id})
       data[:skip_validations] = true
-      PostCreator.new(discourse_user(post.user), data).create
+      p = PostCreator.new(discourse_user(post.user), data).create
+      id = post.serialize[:id]||"discussion-#{old_topic_id}"
+      File.open('posts_map.csv', 'a') {|f| f.write("#{id},#{p.id}\n") }
     end
     log "  Imported #{posts.size} posts"
   end
